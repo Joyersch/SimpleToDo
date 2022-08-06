@@ -145,7 +145,7 @@ function DrawCheckButton($entry){
 
 function DrawEditButton($todo){
     echo "
-    <form action='/edit/' method='get'>
+    <form action='./edit/' method='get'>
     <input type='hidden' id='todo' name='todo' value='$todo'>
     <input type='submit' value='edit'>
     </form>";
@@ -153,7 +153,7 @@ function DrawEditButton($todo){
 
 function DrawNewButton(){
     echo "
-    <form action='/new/'>
+    <form action='./new/'>
     <input type='submit' value='new'>
     </form>";
 }

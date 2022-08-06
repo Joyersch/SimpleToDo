@@ -2,9 +2,9 @@
 
 class ToDo extends DatabaseObject
 {
-    public int $ID;
-    public string $Text;
-    public Category $Category;
+    public $ID;
+    public $Text;
+    public $Category;
 
 
     public function GetByID($ID) {

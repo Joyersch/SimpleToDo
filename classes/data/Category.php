@@ -2,8 +2,8 @@
 
 class Category extends DatabaseObject
 {
-    public int $ID;
-    public string $Name;
+    public $ID;
+    public $Name;
 
     public function GetByID($ID) {
 

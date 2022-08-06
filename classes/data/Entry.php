@@ -2,12 +2,12 @@
 
 class Entry extends DatabaseObject
 {
-    public int $ID;
-    public string $Text;
-    public bool $Done;
+    public $ID;
+    public $Text;
+    public $Done;
 
-    private int $LinkedToDo;
-    private int $LinkedEntry;
+    private $LinkedToDo;
+    private $LinkedEntry;
 
     public function GetByID($ID) {
 
@@ -85,6 +85,9 @@ class Entry extends DatabaseObject
 
         $queryAdditions = "";
 
+        if (isset($this -> Text))
+            $queryAdditions .= @",Text = {$this -> Text}";
+
         if (isset($this -> LinkedToDo))
             $queryAdditions .= @",LinkedToDo = {$this -> LinkedToDo}";
 
@@ -93,7 +96,7 @@ class Entry extends DatabaseObject
             $queryAdditions .= @",LinkedEntry = {$this -> LinkedEntry}";
 
         # Runs update
-        return $this -> connection -> query(@"UPDATE Entry SET Text = '{$this -> Text}',Done = {$Done}{$queryAdditions} WHERE ID = {$this -> ID}");
+        return $this -> connection -> query(@"UPDATE Entry SET Done = {$Done}{$queryAdditions} WHERE ID = {$this -> ID}");
     }
 
     public function Delete(){

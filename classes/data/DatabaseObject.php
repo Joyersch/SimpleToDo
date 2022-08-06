@@ -2,9 +2,9 @@
 
 class DatabaseObject
 {
-    protected mysqli $connection;
+    protected  $connection;
 
-    public function __construct(mysqli $connection){
+    public function __construct($connection){
         $this -> connection = $connection;
     }
 }
