@@ -1,8 +1,8 @@
 <?php
 
-function Connect($servername,$username,$password,$dbname){
+function Connect($servername,$username,$password,$dbname) {
     if (!isset($servername) || !isset($username)|| !isset($password) || !isset($dbname)){
-        return null;
+        return false;
     }
     else {
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -11,9 +11,18 @@ function Connect($servername,$username,$password,$dbname){
             $IsConnected = true;
             return $conn;
         } else {
-            return null;
+            return false;
         }
     }
+}
+
+function ConnectEx($connectionData) : mysqli{
+    if (!isset($connectionData["servername"]) ||
+        !isset($connectionData["username"]) ||
+        !isset($connectionData["password"]) ||
+        !isset($connectionData["database_name"]))
+        return false;
+     return Connect($connectionData["servername"],$connectionData["username"],$connectionData["password"],$connectionData["database_name"]);
 }
 
 function Close($conn){

@@ -20,7 +20,7 @@ include "db/queries.php";
 if (!isset($_GET['todo']))
     return;
 
-echo "<input type='submit' value='return' onclick='moveToPage(\"index.php\");'>";
+echo "<input type='submit' value='return' onclick='moveToPage(\"..\");'>";
 
 $todo = $_GET['todo'];
 $txt = "ToEdit";
@@ -200,7 +200,7 @@ function DrawSubmitNewButton($todo){
 
 function DrawSubmitDeleteToDoButton($todo){
     echo "
-    <input type='submit' value='d' onclick='redirectToDeleteToDo($todo,moveToPage(\"index.php\"));'>";
+    <input type='submit' value='d' onclick='redirectToDeleteToDo($todo,moveToPage(\"..\"));'>";
 }
 
 function DrawSubmitDeleteEntryButton($entry){

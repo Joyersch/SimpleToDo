@@ -1,5 +1,5 @@
 ## SimpleToDo
-This is a simple todo web "program".  
+This is a simple todo web "program".
 Code is pretty scuft but works never the less.  
 
 Feels free to use this however you want.  
@@ -9,3 +9,6 @@ You might want to change the database name though.
 Than you will also need to change it in the [connection configuration](https://github.com/ErikSchnittker/SimpleToDo/blob/master/db/connection.php).  
 The rest should be a just work thing.  
 PS: You might also want to change the css inside the css folder.
+
+## Prerequisites
+An Apache based web-server with ```AllowOverride All```

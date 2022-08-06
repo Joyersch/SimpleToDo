@@ -1,4 +1,5 @@
 <?php
+
 include "db/database_functions.php";
 include "db/connection.php";
 include "db/queries.php";
@@ -144,7 +145,7 @@ function DrawCheckButton($entry){
 
 function DrawEditButton($todo){
     echo "
-    <form action='edit.php' method='get'>
+    <form action='/edit/' method='get'>
     <input type='hidden' id='todo' name='todo' value='$todo'>
     <input type='submit' value='edit'>
     </form>";
@@ -152,7 +153,7 @@ function DrawEditButton($todo){
 
 function DrawNewButton(){
     echo "
-    <form action='new.php'>
+    <form action='/new/'>
     <input type='submit' value='new'>
     </form>";
 }

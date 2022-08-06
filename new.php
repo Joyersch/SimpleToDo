@@ -17,7 +17,7 @@ include "db/queries.php";
 
 
 <H1>Create new ToDo</H1>
-<form action='edit.php' id='hidden_value' method='get'>
+<form action='../edit/' id='hidden_value' method='get'>
     <input type="hidden" id='todo' name='todo' value="newest">
 </form>
 <form action=''>

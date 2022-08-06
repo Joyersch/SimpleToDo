@@ -1,10 +1,10 @@
 //sends post request to given address with given data.
-function sendDataTo(reciever,data, func_responseHandle){
+function sendDataTo(reciever,data, request_method ,func_responseHandle){
 
     var url = reciever;
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", url);
+    xhr.open(request_method, url);
     
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -23,65 +23,59 @@ return (typeof x !== "undefined")
 }
 
 function redirectToCreateToDo(text, category, func_responseHandle){
-    var url = "./interface/create/todo.php/";
+    var url = "../api/v1/todos/";
     var data = JSON.stringify({
-        Text:text,
-        Category:category
+        "Text":text,
+        "Category":category
     });
-    return sendDataTo(url,data, func_responseHandle);
-}
-
-function redirectToCreateSubEntry(text, todo, subentry, func_responseHandle){
-    var url = "./interface/create/subentry.php/";
-    var data = JSON.stringify({
-        ToDo:todo,
-        Text:text,
-        SubEntry:subentry
-    });
-    return sendDataTo(url,data, func_responseHandle);
+    return sendDataTo(url,data, "POST", func_responseHandle);
 }
 
 function redirectToCreateEntry(text, todo, func_responseHandle){
-    var url = "./interface/create/entry.php/";
+    var url = "../api/v1/entries/";
     var data = JSON.stringify({
-        ToDo:todo,
-        Text:text
+        "LinkedToDo":todo,
+        "Text":text
     });
-    return sendDataTo(url,data, func_responseHandle);
+    return sendDataTo(url,data, "POST", func_responseHandle);
+}
+
+function redirectToCreateSubEntry(text, todo, subentry, func_responseHandle){
+    var url = "../api/v1/entries/";
+    var data = JSON.stringify({
+        "LinkedToDo":todo,
+        "Text":text,
+        "LinkedEntry":subentry
+    });
+    return sendDataTo(url,data,"POST", func_responseHandle);
 }
 
 function redirectToChecked(e,s, func_responseHandle){
-    var url = "./interface/update/checked.php/";
+    var url = "../api/v1/entries/" + e;
     var data = JSON.stringify({
-        Entry:e,
-        State:s
+        "ID":e,
+        "Done":s
     });
-    return sendDataTo(url,data, func_responseHandle);
+    return sendDataTo(url,data,"PUT", func_responseHandle);
 }
 
 function redirectToUpdateEntry(text, entry, func_responseHandle){
-    var url = "./interface/update/entry.php/";
+    var url = "../api/v1/entries/" + entry;
     var data = JSON.stringify({
-        Text:text,
-        Id:entry
+        "ID":entry,
+        "Text":text
     });
-    return sendDataTo(url,data,func_responseHandle);
+    return sendDataTo(url,data, "PUT",func_responseHandle);
 }
 
 function redirectToDeleteToDo(todo, func_responseHandle){
-    var url = "./interface/delete/todo.php/";
-    var data = JSON.stringify({
-        ToDo:todo
-    });
-    return sendDataTo(url,data,func_responseHandle);
+    var url = "../api/v1/todos/" + todo;
+    return sendDataTo(url,"","DELETE",func_responseHandle);
 }
 
 function redirectToDeleteEntry(entry, func_responseHandle){
-    var url = "./interface/delete/entry.php/";
-    var data = JSON.stringify({
-        Entry:entry
-    });
-    return sendDataTo(url,data,func_responseHandle);
+    var url = "../api/v1/entries/" + entry;
+    return sendDataTo(url,"","DELETE",func_responseHandle);
 }
 
 function reloadPage(){
