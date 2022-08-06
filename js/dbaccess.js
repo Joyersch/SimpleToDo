@@ -51,7 +51,7 @@ function redirectToCreateSubEntry(text, todo, subentry, func_responseHandle){
 }
 
 function redirectToChecked(e,s, func_responseHandle){
-    var url = "/api/v1/entries/" + e;
+    var url = "./api/v1/entries/" + e;
     var data = JSON.stringify({
         "ID":e,
         "Done":s
