@@ -122,9 +122,10 @@ switch ($method){
 
         if ($object -> Update())
             http_response_code(202); # set response to accepted
-        else
+        else{
+            http_response_code(400); # set response to bad request
             exit();
-            //http_response_code(400); # set response to bad request
+        }
         break;
     case "DELETE":
         if ($id === -1){

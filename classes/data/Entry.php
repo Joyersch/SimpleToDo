@@ -86,7 +86,7 @@ class Entry extends DatabaseObject
         $queryAdditions = "";
 
         if (isset($this -> Text))
-            $queryAdditions .= @",Text = {$this -> Text}";
+            $queryAdditions .= @",Text = '{$this -> Text}'";
 
         if (isset($this -> LinkedToDo))
             $queryAdditions .= @",LinkedToDo = {$this -> LinkedToDo}";
