@@ -187,7 +187,7 @@ class Entry extends DatabaseObject
         return $todo;
     }
 
-    public function GetUnderlyingEntries(){
+    public function GetUnderlyingEntries() : array{
         if (!isset($this -> ID))
             return [];
 

@@ -56,8 +56,15 @@ class ToDo extends DatabaseObject
 
     public function Update(){
 
-        # Check if ID is set
-        if (!isset($this -> ID))
+        # Check if ID and Text is set
+        if (!isset($this -> ID)||
+            !isset($this -> Text))
+            return false;
+
+        # Check if Category is set and has an ID
+        if (!isset($this -> Category))
+            return false;
+        else if (!isset($this -> Category -> ID))
             return false;
 
         # Runs update

@@ -1,51 +1,94 @@
 <?php
-include "db/database_functions.php";
-include "db/connection.php";
-include "db/queries.php";
+require_once "classes/data/DatabaseObject.php";
+require_once "classes/data/Entry.php";
+require_once "classes/data/ToDo.php";
+require_once "classes/data/Category.php";
+
+require_once "classes/view/Form.php";
+require_once "classes/view/Combobox.php";
+require_once "classes/view/Label.php";
+require_once "classes/view/Input.php";
+require_once "classes/view/Textbox.php";
+require_once "classes/view/Checkbox.php";
+require_once "classes/view/EditTable.php";
+
+require_once "db/database_functions.php";
+require_once "db/connection.php";
+
 ?>
-<script>
-    <?php
-    include "js/dbaccess.js";
-    ?>
-</script>
+    <script>
+        <?php
+        include "js/dbaccess.js";
+        ?>
+    </script>
+    <style>
+        <?php
+        include "css/todo.css";
+        ?>
+    </style>
+<?php
+# open a database connection
+$conn = ConnectEx(getLoginData());
 
-<style>
-    <?php
-    include "css/todo.css";
-    ?>
-</style>
+echo "<H1>Create new ToDo</H1>";
+$form = new Form();
+$form -> action = "../edit/";
+$form -> method = "get";
+$form -> id = "hidden_value";
 
+$input = new Input();
+$input -> type = "hidden";
+$input -> id = "todo";
+$input -> name = "todo";
+$input -> value = "newest";
 
-<H1>Create new ToDo</H1>
-<form action='../edit/' id='hidden_value' method='get'>
-    <input type="hidden" id='todo' name='todo' value="newest">
-</form>
-<form action=''>
-    Category:
-    <?php
-    $result = RunAQuery(getLoginData(),Query_Categories());
-    if (!$result)
-    return;
+$form -> container[] = $input;
 
-    echo "<select name='category' id='category'>";
-    while($show = $result -> fetch_row()){
-        echo "<option value='$show[0]'>$show[1]";
-    }
-    echo "</select>";
-    ?>
-    Name:
-    <input type="text" placeholder="Name " id="txt">
-    <input type="button" onclick="
+echo $form -> Print();
+
+$form = new Form();
+$Label = new Label();
+$Label -> Text = "Category: ";
+echo $Label -> Print();
+
+# print combo with category selection
+$category = new Category($conn);
+$categories = $category -> GetAll();
+$combo = new Combobox();
+$combo -> index = 0;
+$combo -> name = "category";
+$combo -> id = "category";
+
+foreach ($categories as $cat){
+    $combo -> container[] = array($cat -> ID,$cat -> Name);
+}
+
+echo $combo -> Print();
+$Label = new Label();
+$Label -> Text = "Name: ";
+echo $Label -> Print();
+
+$textbox = new Textbox();
+$textbox -> placeholder = "Name";
+$textbox -> id = "txt";
+
+echo $textbox -> Print();
+
+$button = new Input();
+$button -> type = "button";
+$button -> value = "create";
+$button -> onclick = "
     var success = redirectToCreateToDo(
-        document.getElementById('txt').value,
-        document.getElementById('category').value,
+        document.getElementById(\"txt\").value,
+        document.getElementById(\"category\").value,
         function(){
-            document.getElementById('hidden_value').submit();
+            document.getElementById(\"hidden_value\").submit();
         });
     if (success){
         return true;
     }
     else
         return false;
-" value="create"/>
-</form>
+";
+
+echo $button -> Print();

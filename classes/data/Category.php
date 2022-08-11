@@ -44,7 +44,8 @@ class Category extends DatabaseObject
     public function Update(){
 
         # Check if ID is set
-        if (!isset($this -> ID))
+        if (!isset($this -> ID) ||
+            !isset($this -> Name))
             return false;
 
         # Runs update

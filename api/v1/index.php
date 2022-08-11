@@ -21,6 +21,9 @@ switch ($method)
         http_response_code(403);
         exit();
 }
+
+# ToDo: Add Authentication here!
+
 # Once we reach this part, we can start processing data further
 
 require_once "../../classes/data/DatabaseObject.php";
