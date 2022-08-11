@@ -41,7 +41,7 @@ class EditTable
                 $input = new Input();
                 $input -> type = "submit";
                 $input -> value = "d";
-                $input -> onclick = "redirectToDeleteToDo(64,moveToPage(\"..\"));";
+                $input -> onclick = "redirectToDeleteToDo({$this -> todo -> ID},moveToPage(\"..\"));";
 
                 $table .= $input -> Print();
             }
