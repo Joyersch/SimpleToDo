@@ -10,7 +10,7 @@ class Checkbox
         if (!isset($this -> id) ||
         !isset($this -> Text) ||
         !isset($this -> checked))
-            return "a";
+            return "";
 
         $checkbox = @"<input type='checkbox' id='entry_{$this -> id}' name='{$this -> id}' onclick=' return redirectToChecked({$this -> id},document.getElementById(\"entry_{$this -> id}\").checked)'";
         if ($this -> checked)
