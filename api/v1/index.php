@@ -1,7 +1,8 @@
 <?php
 
-# This file will redirect to the rest of the files
-if (!isset($_GET["ACTION"])){
+# check if call contains object or authkey which is required
+
+if (!isset($_GET["object"]) || !isset($_GET["authkey"])){
     http_response_code(403);
     exit();
 }
@@ -22,7 +23,6 @@ switch ($method)
         exit();
 }
 
-# ToDo: Add Authentication here!
 
 # Once we reach this part, we can start processing data further
 
@@ -30,6 +30,7 @@ require_once "../../classes/data/DatabaseObject.php";
 require_once "../../classes/data/Entry.php";
 require_once "../../classes/data/ToDo.php";
 require_once "../../classes/data/Category.php";
+require_once "../../classes/data/Authentication.php";
 
 require_once "../../db/database_functions.php";
 require_once "../../db/connection.php";
@@ -37,23 +38,32 @@ require_once "../../db/connection.php";
 # Open a database connection
 $conn = ConnectEx(getLoginData());
 
-# Pull actual data
-$data = $_GET["ACTION"];
+# check authentication key
 
-# Split data into an array
-$dataArray = explode('/', $data);
+$authentication = new Authentication($conn);
+
+# check if an authencication entry exists
+if (!$authentication -> GetByKey($_GET["authkey"])){
+    http_response_code(403);
+    exit();
+}
+
+# check if authentication if still valid
+if (!$authentication -> Verify()){
+    $authentication -> Delete();
+    http_response_code(403);
+    exit();
+}
+
+# get object info
+$objectdata = $_GET["object"];
 
 $object = null;
-$objectdata = "";
 $id = -1;
 
-if (count($dataArray) == 1)
-    $objectdata = $data;
-else{
-        if ($dataArray[1] !== "")
-            $id = $dataArray[1];
-
-    $objectdata = $dataArray[0];
+#set id if given
+if (isset($_GET["id"])){
+    $id = $_GET["id"];
 }
 # creating data object base on the given request
 switch($objectdata){

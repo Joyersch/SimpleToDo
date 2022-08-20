@@ -22,8 +22,8 @@ function Isset(x){
 return (typeof x !== "undefined") 
 }
 
-function redirectToCreateToDo(text, category, func_responseHandle){
-    var url = "../api/v1/todos/";
+function redirectToCreateToDo(text, category, authentication, func_responseHandle){
+    var url = "../api/v1/todos?authkey=" + authentication;
     var data = JSON.stringify({
         "Text":text,
         "Category":category
@@ -31,8 +31,8 @@ function redirectToCreateToDo(text, category, func_responseHandle){
     return sendDataTo(url,data, "POST", func_responseHandle);
 }
 
-function redirectToCreateEntry(text, todo, func_responseHandle){
-    var url = "../api/v1/entries/";
+function redirectToCreateEntry(text, todo, authentication, func_responseHandle){
+    var url = "../api/v1/entries?authkey=" + authentication;
     var data = JSON.stringify({
         "LinkedToDo":todo,
         "Text":text
@@ -40,8 +40,8 @@ function redirectToCreateEntry(text, todo, func_responseHandle){
     return sendDataTo(url,data, "POST", func_responseHandle);
 }
 
-function redirectToCreateSubEntry(text, todo, subentry, func_responseHandle){
-    var url = "../api/v1/entries/";
+function redirectToCreateSubEntry(text, todo, subentry, authentication, func_responseHandle){
+    var url = "../api/v1/entries?authkey=" + authentication;
     var data = JSON.stringify({
         "LinkedToDo":todo,
         "Text":text,
@@ -50,17 +50,17 @@ function redirectToCreateSubEntry(text, todo, subentry, func_responseHandle){
     return sendDataTo(url,data,"POST", func_responseHandle);
 }
 
-function redirectToChecked(e,s, func_responseHandle){
-    var url = "./api/v1/entries/" + e;
+function redirectToChecked(id, done, authentication, func_responseHandle){
+    var url = "./api/v1/entries/" + id + "?authkey=" + authentication;
     var data = JSON.stringify({
-        "ID":e,
-        "Done":s
+        "ID":id,
+        "Done":done
     });
     return sendDataTo(url,data,"PUT", func_responseHandle);
 }
 
-function redirectToUpdateEntry(text, entry, func_responseHandle){
-    var url = "../api/v1/entries/" + entry;
+function redirectToUpdateEntry(text, entry, authentication, func_responseHandle){
+    var url = "../api/v1/entries/" + entry + "?authkey=" + authentication;
     var data = JSON.stringify({
         "ID":entry,
         "Text":text
@@ -68,13 +68,13 @@ function redirectToUpdateEntry(text, entry, func_responseHandle){
     return sendDataTo(url,data, "PUT",func_responseHandle);
 }
 
-function redirectToDeleteToDo(todo, func_responseHandle){
-    var url = "../api/v1/todos/" + todo;
+function redirectToDeleteToDo(todo, authentication, func_responseHandle){
+    var url = "../api/v1/todos/" + todo + "?authkey=" + authentication;
     return sendDataTo(url,"","DELETE",func_responseHandle);
 }
 
-function redirectToDeleteEntry(entry, func_responseHandle){
-    var url = "../api/v1/entries/" + entry;
+function redirectToDeleteEntry(entry, authentication, func_responseHandle){
+    var url = "../api/v1/entries/" + entry + "?authkey=" + authentication;
     return sendDataTo(url,"","DELETE",func_responseHandle);
 }
 

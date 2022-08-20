@@ -111,7 +111,7 @@ class Entry extends DatabaseObject
             $entry -> Delete();
 
         # Runs delete query and returns result
-        return $this -> connection -> query(@"DELETE FROM Entry where ID = {$this -> ID}");
+        return $this -> connection -> query(@"DELETE FROM Entry WHERE ID = {$this -> ID}");
     }
 
     public function GetByJSON($json){

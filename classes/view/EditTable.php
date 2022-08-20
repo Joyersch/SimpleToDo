@@ -14,7 +14,7 @@ class EditTable
         return $this -> todo -> GetByID($id);
     }
 
-    public function Print(){
+    public function Print($authentication){
 
         $table = @"<div class='{$this -> todo -> ID}'>";
         $table .= "<table>";
@@ -41,7 +41,7 @@ class EditTable
                 $input = new Input();
                 $input -> type = "submit";
                 $input -> value = "d";
-                $input -> onclick = "redirectToDeleteToDo({$this -> todo -> ID},moveToPage(\"..\"));";
+                $input -> onclick = "redirectToDeleteToDo({$this -> todo -> ID},\"$authentication\",moveToPage(\"..\"));";
 
                 $table .= $input -> Print();
             }
@@ -54,7 +54,7 @@ class EditTable
 
 
         foreach($entries as $entry){
-            $table .= $this -> PrintRows($entry,$depth,1);
+            $table .= $this -> PrintRows($entry,$depth,1,$authentication);
         }
 
         #print create row
@@ -76,7 +76,7 @@ class EditTable
         $input = new Input();
         $input -> type = "submit";
         $input -> value = "c";
-        $input -> onclick = "redirectToCreateEntry(document.getElementById(\"new_entry\").value,{$this -> todo -> ID},reloadPage);";
+        $input -> onclick = "redirectToCreateEntry(document.getElementById(\"new_entry\").value,{$this -> todo -> ID},\"$authentication\",reloadPage);";
 
         $table .= $input -> Print();
         $table .= "</td><td></td></tr>";
@@ -86,7 +86,7 @@ class EditTable
         return $table;
     }
 
-    public function PrintRows($entry, $total_depth, $current_depth){
+    public function PrintRows($entry, $total_depth, $current_depth, $authentication){
         $row = "<tr>";
         for ($i = 0; $i < $total_depth; $i++){
             $row .= "<td>";
@@ -107,7 +107,7 @@ class EditTable
         $input = new Input();
         $input -> type = "submit";
         $input -> value = "e";
-        $input -> onclick = "redirectToUpdateEntry(document.getElementById(\"entry_{$entry -> ID}\").value,{$entry -> ID},reloadPage);";
+        $input -> onclick = "redirectToUpdateEntry(document.getElementById(\"entry_{$entry -> ID}\").value,{$entry -> ID},\"$authentication\",reloadPage);";
 
         $row .= $input -> Print();
 
@@ -116,7 +116,7 @@ class EditTable
         $input = new Input();
         $input -> type = "submit";
         $input -> value = "d";
-        $input -> onclick = "redirectToDeleteEntry({$entry -> ID},reloadPage);";
+        $input -> onclick = "redirectToDeleteEntry({$entry -> ID},\"$authentication\",reloadPage);";
 
         $row .= $input -> Print();
         $row .= "</td>";
@@ -142,7 +142,7 @@ class EditTable
         $input = new Input();
         $input -> type = "submit";
         $input -> value = "c";
-        $input -> onclick = "redirectToCreateSubEntry(document.getElementById(\"new_entry_{$entry -> ID}\").value,{$this -> todo -> ID},{$entry -> ID},reloadPage);";
+        $input -> onclick = "redirectToCreateSubEntry(document.getElementById(\"new_entry_{$entry -> ID}\").value,{$this -> todo -> ID},{$entry -> ID},\"$authentication\",reloadPage);";
 
         $row .= $input -> Print();
         $row .= "</td><td></td></tr>";
@@ -153,7 +153,7 @@ class EditTable
             return $row;
 
         foreach($entries as $lower_entry){
-            $row .= $this -> PrintRows($lower_entry,$total_depth, $current_depth + 1);
+            $row .= $this -> PrintRows($lower_entry,$total_depth, $current_depth + 1, $authentication);
         }
         return $row;
     }

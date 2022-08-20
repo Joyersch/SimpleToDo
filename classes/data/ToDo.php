@@ -83,7 +83,7 @@ class ToDo extends DatabaseObject
             $entry -> Delete();
 
         # Runs delete query and returns result
-        return $this -> connection -> query(@"DELETE FROM ToDo where ID = {$this -> ID}");
+        return $this -> connection -> query(@"DELETE FROM ToDo WHERE ID = {$this -> ID}");
     }
 
     public function GetByJSON($json){

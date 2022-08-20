@@ -1,7 +1,7 @@
 RewriteEngine On
 
-RewriteRule ^(todos|entries|categories)$ index.php?ACTION=$0
-RewriteRule ^(todos|entries|categories)/\d*$ index.php?ACTION=$0
-RewriteRule ^(todos|entries|categories)/\d*/$ index.php?ACTION=$0
+RewriteRule ^(todos|entries|categories)$ index.php?object=$1 [QSA]
+RewriteRule ^(todos|entries|categories)/(\d+)$ index.php?object=$1&id=$2 [QSA]
+
 
 RewriteRule ^.*$ index.php

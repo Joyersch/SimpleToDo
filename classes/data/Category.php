@@ -59,7 +59,7 @@ class Category extends DatabaseObject
             return false;
 
         # Runs delete query and returns result
-        return $this -> connection -> query(@"DELETE FROM Category where ID = {$this -> ID}");
+        return $this -> connection -> query(@"DELETE FROM Category WHERE ID = {$this -> ID}");
     }
 
     public function GetByJSON($json){

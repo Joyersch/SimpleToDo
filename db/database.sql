@@ -24,3 +24,11 @@ CREATE TABLE Category(
     Name NVARCHAR(255) NOT NULL,
     PRIMARY KEY (ID)
 );
+
+CREATE TABLE Authentication(
+    Name NVARCHAR(255) NOT NULL,
+    PassKey UUID NOT NULL DEFAULT UUID(),
+    StartTime DATETIME NOT NULL,
+    EndTime DATETIME NOT NULL,
+    PRIMARY KEY (Name)
+);

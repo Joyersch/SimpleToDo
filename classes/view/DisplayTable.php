@@ -14,7 +14,7 @@ class DisplayTable
        return $this -> todo -> GetByID($id);
     }
 
-    public function Print(){
+    public function Print($authentication){
 
         $table = @"<div class='{$this -> todo -> ID}'>";
         $table .= "<table>";
@@ -66,7 +66,7 @@ class DisplayTable
         $entries = $this -> todo -> GetUnderlyingEntries();
 
         foreach($entries as $entry){
-            $table .= $this -> PrintRows($entry,$depth,1);
+            $table .= $this -> PrintRows($entry,$depth,1,$authentication);
         }
 
 
@@ -75,7 +75,7 @@ class DisplayTable
         return $table;
     }
 
-    public function PrintRows($entry, $total_depth, $current_depth){
+    public function PrintRows($entry, $total_depth, $current_depth,$authentication){
         $row = "<tr>";
         for ($i = 0; $i < $total_depth; $i++){
             $row .= "<td>";
@@ -94,7 +94,7 @@ class DisplayTable
         $checkbox -> id = $entry -> ID;
         $checkbox -> Text = $entry -> Text;
         $checkbox -> checked = $entry -> Done;
-        $row .= $checkbox -> Print();
+        $row .= $checkbox -> Print($authentication);
         $row .= "</td>";
 
         $row .= "</tr>";
