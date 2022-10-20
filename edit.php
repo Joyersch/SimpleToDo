@@ -35,41 +35,41 @@ $conn = ConnectEx(getLoginData());
 $authentication = new Authentication($conn);
 
 # this will set or reset the authentication key required for the api
-if (!$authentication -> GetByName('ToDo') || !$authentication -> Verify()){
+if (!$authentication->GetByName('ToDo') || !$authentication->Verify()) {
 
-    $result = $conn -> query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
+    $result = $conn->query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
 
-    $row = $result -> fetch_row();
+    $row = $result->fetch_row();
 
-    $authentication -> StartTime = $row[0];
+    $authentication->StartTime = $row[0];
 
-    $authentication -> EndTime = $row[1];
+    $authentication->EndTime = $row[1];
 
-    $authentication -> Name = 'ToDo';
+    $authentication->Name = 'ToDo';
 
-    $authentication -> Add();
+    $authentication->Add();
 }
 
 # print return button
 $input = new Input();
-$input -> type = "submit";
-$input -> value = "return";
-$input -> onclick = "moveToPage(\"..\");";
-echo $input -> Print();
+$input->type = "submit";
+$input->value = "return";
+$input->onclick = "moveToPage(\"..\");";
+echo $input->Print();
 
 
 # set todo object
 $todo = new Todo($conn);
 
 $todo_value = 0;
-if (isset($_GET['todo'])){
+if (isset($_GET['todo'])) {
     $todo_value = $_GET['todo'];
-    if ($todo_value === 'newest'){
-        $todos = $todo -> GetAll();
-        $todo_value = $todos[count($todos) - 1] -> ID;
+    if ($todo_value === 'newest') {
+        $todos = $todo->GetAll();
+        $todo_value = $todos[count($todos) - 1]->ID;
     }
 }
 
 $table = new EditTable($conn);
-$table -> GetByID($todo_value);
-echo $table -> Print($authentication -> PassKey);
+$table->GetByID($todo_value);
+echo $table->Print($authentication->PassKey);

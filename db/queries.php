@@ -1,4 +1,6 @@
 <?php
+ #ToDo: Are these even used anymore?
+
 
 function Query_Categories(){
     return "SELECT Category.ID, Category.Name FROM Category";

@@ -14,11 +14,11 @@ class Textbox
         $output = @"<input type='text'";
 
 
-        if (isset($this -> Text))
-        $output .= "value='{$this -> Text}'";
+        if (isset($this->Text))
+            $output .= "value='{$this->Text}'";
 
-        $output .= "id='{$this -> id}' placeholder='{$this -> placeholder}'>";
+        $output .= "id='{$this->id}' placeholder='{$this->placeholder}'>";
 
-        return   $output;
+        return $output;
     }
 }

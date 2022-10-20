@@ -78,10 +78,39 @@ function redirectToDeleteEntry(entry, authentication, func_responseHandle){
     return sendDataTo(url,"","DELETE",func_responseHandle);
 }
 
-function reloadPage(){
-    window.location.reload(false);
+function isResponseGood(response){
+    switch (response) {
+        case 200:
+        case 201:
+        case 202:
+            return true;
+        default:
+            return false;
+    }
 }
 
 function moveToPage(dir){
     window.location.href = dir;
+}
+
+function moveToBase(){
+    moveToPage("..");
+}
+
+function moveToBaseIfGood(data){
+    if (isResponseGood(data.target.status))
+        moveToBase();
+    else
+        alert("an eror occured!\ncode:" + data.target.status);
+}
+
+function reloadPage(){
+    window.location.reload(false);
+}
+
+function reloadPageIfGood(data){
+    if (isResponseGood(data.target.status))
+        reloadPage();
+    else
+        alert("an eror occured!\ncode:" + data.target.status);
 }

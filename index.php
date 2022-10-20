@@ -37,98 +37,98 @@ $conn = ConnectEx(getLoginData());
 $authentication = new Authentication($conn);
 
 # this will set or reset the authentication key required for the api
-if (!$authentication -> GetByName('ToDo') || !$authentication -> Verify()){
+if (!$authentication->GetByName('ToDo') || !$authentication->Verify()) {
 
-    $result = $conn -> query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
+    $result = $conn->query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
 
-    $row = $result -> fetch_row();
+    $row = $result->fetch_row();
 
-    $authentication -> StartTime = $row[0];
+    $authentication->StartTime = $row[0];
 
-    $authentication -> EndTime = $row[1];
+    $authentication->EndTime = $row[1];
 
-    $authentication -> Name = 'ToDo';
+    $authentication->Name = 'ToDo';
 
-    $authentication -> Add();
+    $authentication->Add();
 }
 
 # set category value
-$category_value = - 1;
+$category_value = -1;
 
 # get category from get
-if (isset($_GET['category']) )
+if (isset($_GET['category']))
     $category_value = $_GET['category'];
 
 # get category object
 $category = new Category($conn);
-$category -> GetByID($category_value);
+$category->GetByID($category_value);
 # create combobox with all categories
 $combo = new Combobox();
-$combo -> name = "category";
+$combo->name = "category";
 # set index to 0 so if no index candidate is found, it will default to first in selection
-$combo -> index = 0;
-$combo -> onchange = "this.form.submit()";
+$combo->index = 0;
+$combo->onchange = "this.form.submit()";
 # get call categories to put into the combobox
-$categories = $category -> GetAll();
+$categories = $category->GetAll();
 
-foreach ($categories as $cat){
+foreach ($categories as $cat) {
     # if category_value is not set, this will set it to the first category
     if ($category_value === -1)
-        $category_value = $cat -> ID;
+        $category_value = $cat->ID;
 
-    if ($cat -> ID === $category_value && isset($combo -> container))
-        $combo -> index = count($combo -> container);
+    if ($cat->ID === $category_value && isset($combo->container))
+        $combo->index = count($combo->container);
 
     # add category data to the combobox container
     # the combobox expects container to be an array of undefined length containing arrays with the length of 2
-    $combo -> container[] = array($cat -> ID,$cat -> Name);
+    $combo->container[] = array($cat->ID, $cat->Name);
 
 }
 
 # create label
 $label = new Label();
-$label -> Text = "Category:";
+$label->Text = "Category:";
 
 # create form
 $form = new Form();
-$form -> method = "get";
-$form -> action = "";
+$form->method = "get";
+$form->action = "";
 
 # add items to form
-$form -> container[] = $label;
-$form -> container[] = $combo;
+$form->container[] = $label;
+$form->container[] = $combo;
 
 #print form
-echo $form -> Print();
+echo $form->Print();
 
 # create new form
 $form = new Form();
-$form -> action = "./new/";
-$form -> method = "get";
+$form->action = "./new/";
+$form->method = "get";
 
 # add input
 $input = new Input();
-$input -> type = "submit";
-$input -> value = "new";
+$input->type = "submit";
+$input->value = "new";
 
 $label = new Label();
-$label -> Text = "Create new ToDo: ";
+$label->Text = "Create new ToDo: ";
 
-$form -> container[] = $label;
-$form -> container[] = $input;
+$form->container[] = $label;
+$form->container[] = $input;
 
-echo $form -> Print();
+echo $form->Print();
 
 $todo = new ToDo($conn);
-$todos = $todo -> GetAll();
+$todos = $todo->GetAll();
 
-foreach ($todos as $inner_todo){
+foreach ($todos as $inner_todo) {
 
-    if ($inner_todo -> Category -> ID !== $category_value)
+    if ($inner_todo->Category->ID !== $category_value)
         continue;
 
     $table = new DisplayTable($conn);
-    $table -> GetByID($inner_todo -> ID);
+    $table->GetByID($inner_todo->ID);
 
-    echo $table -> Print($authentication -> PassKey);
+    echo $table->Print($authentication->PassKey);
 }

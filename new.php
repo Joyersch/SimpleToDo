@@ -35,73 +35,73 @@ $conn = ConnectEx(getLoginData());
 $authentication = new Authentication($conn);
 
 # this will set or reset the authentication key required for the api
-if (!$authentication -> GetByName('ToDo') || !$authentication -> Verify()){
+if (!$authentication->GetByName('ToDo') || !$authentication->Verify()) {
 
-    $result = $conn -> query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
+    $result = $conn->query("SELECT NOW(), NOW() + INTERVAL 1 DAY");
 
-    $row = $result -> fetch_row();
+    $row = $result->fetch_row();
 
-    $authentication -> StartTime = $row[0];
+    $authentication->StartTime = $row[0];
 
-    $authentication -> EndTime = $row[1];
+    $authentication->EndTime = $row[1];
 
-    $authentication -> Name = 'ToDo';
+    $authentication->Name = 'ToDo';
 
-    $authentication -> Add();
+    $authentication->Add();
 }
 
 echo "<H1>Create new ToDo</H1>";
 $form = new Form();
-$form -> action = "../edit/";
-$form -> method = "get";
-$form -> id = "hidden_value";
+$form->action = "../edit/";
+$form->method = "get";
+$form->id = "hidden_value";
 
 $input = new Input();
-$input -> type = "hidden";
-$input -> id = "todo";
-$input -> name = "todo";
-$input -> value = "newest";
+$input->type = "hidden";
+$input->id = "todo";
+$input->name = "todo";
+$input->value = "newest";
 
-$form -> container[] = $input;
+$form->container[] = $input;
 
-echo $form -> Print();
+echo $form->Print();
 
 $form = new Form();
 $Label = new Label();
-$Label -> Text = "Category: ";
-echo $Label -> Print();
+$Label->Text = "Category: ";
+echo $Label->Print();
 
 # print combo with category selection
 $category = new Category($conn);
-$categories = $category -> GetAll();
+$categories = $category->GetAll();
 $combo = new Combobox();
-$combo -> index = 0;
-$combo -> name = "category";
-$combo -> id = "category";
+$combo->index = 0;
+$combo->name = "category";
+$combo->id = "category";
 
-foreach ($categories as $cat){
-    $combo -> container[] = array($cat -> ID,$cat -> Name);
+foreach ($categories as $cat) {
+    $combo->container[] = array($cat->ID, $cat->Name);
 }
 
-echo $combo -> Print();
+echo $combo->Print();
 $Label = new Label();
-$Label -> Text = "Name: ";
-echo $Label -> Print();
+$Label->Text = "Name: ";
+echo $Label->Print();
 
 $textbox = new Textbox();
-$textbox -> placeholder = "Name";
-$textbox -> id = "txt";
+$textbox->placeholder = "Name";
+$textbox->id = "txt";
 
-echo $textbox -> Print();
+echo $textbox->Print();
 
 $button = new Input();
-$button -> type = "button";
-$button -> value = "create";
-$button -> onclick = @"
+$button->type = "button";
+$button->value = "create";
+$button->onclick = @"
     var success = redirectToCreateToDo(
         document.getElementById(\"txt\").value,
         document.getElementById(\"category\").value,
-        \"{$authentication -> PassKey}\",
+        \"{$authentication->PassKey}\",
         function(){
             document.getElementById(\"hidden_value\").submit();
         });
@@ -112,4 +112,4 @@ $button -> onclick = @"
         return false;
 ";
 
-echo $button -> Print();
+echo $button->Print();

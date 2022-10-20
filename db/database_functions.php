@@ -1,10 +1,10 @@
 <?php
 
-function Connect($servername,$username,$password,$dbname) {
-    if (!isset($servername) || !isset($username)|| !isset($password) || !isset($dbname)){
+function Connect($servername, $username, $password, $dbname)
+{
+    if (!isset($servername) || !isset($username) || !isset($password) || !isset($dbname)) {
         return false;
-    }
-    else {
+    } else {
         $conn = new mysqli($servername, $username, $password, $dbname);
         if (!($conn->connect_error)) {
 
@@ -16,36 +16,49 @@ function Connect($servername,$username,$password,$dbname) {
     }
 }
 
-function ConnectEx($connectionData) : mysqli{
+function ConnectEx($connectionData): mysqli
+{
     if (!isset($connectionData["servername"]) ||
         !isset($connectionData["username"]) ||
         !isset($connectionData["password"]) ||
         !isset($connectionData["database_name"]))
         return false;
-     return Connect($connectionData["servername"],$connectionData["username"],$connectionData["password"],$connectionData["database_name"]);
+    return Connect(
+        $connectionData["servername"]
+        , $connectionData["username"]
+        , $connectionData["password"]
+        , $connectionData["database_name"]);
 }
 
-function Close($conn){
-    $conn -> close();
+function Close($conn)
+{
+    $conn->close();
 }
 
-function RunQuery(mysqli $conn, $query){
-    if ($result = $conn -> query($query)) {
+function RunQuery(mysqli $conn, $query)
+{
+    if ($result = $conn->query($query)) {
         return $result;
-    }
-    else{
+    } else {
         return null;
     }
 }
 
-function RunAQuery($connectionData, $query) {
+function RunAQuery($connectionData, $query)
+{
     if (!isset($connectionData["servername"]) ||
         !isset($connectionData["username"]) ||
         !isset($connectionData["password"]) ||
         !isset($connectionData["database_name"]))
         return false;
-    $conn = Connect($connectionData["servername"],$connectionData["username"],$connectionData["password"],$connectionData["database_name"]);
-    $result = RunQuery($conn,$query);
+
+    $conn = Connect(
+        $connectionData["servername"]
+        , $connectionData["username"]
+        , $connectionData["password"]
+        , $connectionData["database_name"]);
+
+    $result = RunQuery($conn, $query);
     Close($conn);
     return $result;
 }

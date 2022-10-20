@@ -2,9 +2,10 @@
 
 class DatabaseObject
 {
-    protected  $connection;
+    protected $connection;
 
-    public function __construct($connection){
-        $this -> connection = $connection;
+    public function __construct($connection)
+    {
+        $this->connection = $connection;
     }
 }
