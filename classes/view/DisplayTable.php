@@ -124,7 +124,7 @@ class DisplayTable
             return $row;
 
         foreach ($entries as $lower_entry) {
-            $row .= $this->PrintRows($lower_entry, $total_depth, $current_depth + 1);
+            $row .= $this->PrintRows($lower_entry, $total_depth, $current_depth + 1, $authentication);
         }
         return $row;
     }
