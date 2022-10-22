@@ -98,18 +98,14 @@ $button = new Input();
 $button->type = "button";
 $button->value = "create";
 $button->onclick = @"
-    var success = redirectToCreateToDo(
+    redirectToCreateToDo(
         document.getElementById(\"txt\").value,
         document.getElementById(\"category\").value,
         \"{$authentication->PassKey}\",
-        function(){
-            document.getElementById(\"hidden_value\").submit();
+        function(data){
+            if (isResponseGood(data.target.status))
+                document.getElementById(\"hidden_value\").submit();
         });
-    if (success){
-        return true;
-    }
-    else
-        return false;
 ";
 
 echo $button->Print();
