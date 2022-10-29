@@ -156,12 +156,16 @@ class Authentication extends DatabaseObject
         $EndTime = $dateTime->getTimestamp();
 
         # checks if the current time is in the bounds of the authentication end time
-        if ($currentTime > $EndTime)
+        if ($currentTime > $EndTime){
+            $this->Delete();
             return false;
+        }
 
         # checks if the current time is in the bounds of the authentication start time
-        if ($currentTime < $StartTime)
+        if ($currentTime < $StartTime){
+            $this->Delete();
             return false;
+        }
         return true;
     }
 
